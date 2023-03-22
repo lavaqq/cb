@@ -42,5 +42,8 @@ def blur(dir_path):
         for (x, y, w, h) in faces:
             face_roi = img[y:y+h, x:x+w]
             face_roi = cv2.GaussianBlur(face_roi, (75, 75), 0)
-            img[y:y+face_roi.shape[0], x:x+face_roi.shape[1]] = face_roi
+            mask = np.zeros((h, w), dtype=np.uint8)
+            cv2.circle(mask, (w//2, h//2), min(w, h)//2, (255, 255, 255), -1)
+            face_roi = cv2.bitwise_and(face_roi, face_roi, mask=mask)
+            img[y:y+h, x:x+w] = cv2.add(img[y:y+h, x:x+w], face_roi)
             cv2.imwrite(f_path, img)
