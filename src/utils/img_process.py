@@ -32,7 +32,7 @@ def crop(dir_path):
 
 def blur(dir_path):
     face_cascade = cv2.CascadeClassifier(
-        cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        cv2.data.haarcascades + "haarcascade_frontalface_alt.xml")
     for f in os.listdir(os.path.join(dir_path, 'processed')):
         f_path = os.path.join(dir_path, 'processed', f)
         img = cv2.imread(f_path)
@@ -41,6 +41,6 @@ def blur(dir_path):
             gray, scaleFactor=1.1, minNeighbors=5)
         for (x, y, w, h) in faces:
             face_roi = img[y:y+h, x:x+w]
-            face_roi = cv2.GaussianBlur(face_roi, (25, 25), 0)
+            face_roi = cv2.GaussianBlur(face_roi, (75, 75), 0)
             img[y:y+face_roi.shape[0], x:x+face_roi.shape[1]] = face_roi
             cv2.imwrite(f_path, img)
