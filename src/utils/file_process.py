@@ -2,7 +2,7 @@ import os
 import shutil
 
 def copy(dir_path):
-    dst_dir = os.path.join(dir_path, "processed")
+    dst_dir = os.path.join(dir_path, 'processed')
     if os.path.exists(dst_dir):
         shutil.rmtree(dst_dir)
     os.mkdir(dst_dir)
@@ -14,14 +14,12 @@ def copy(dir_path):
             shutil.copyfile(src_path, dst_path)
 
 
-
-def rename(directory_path):
-    count = 0
-    for filename in os.listdir(directory_path):
-        file_path = os.path.join(directory_path, filename)
-        if os.path.isfile(file_path) and any(file_path.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png']):
-            new_filename = str(count) + ext
-            os.rename(file_path, os.path.join(directory_path, new_filename))
-            count += 1
-        else:
-            continue
+def rename(dir_path):
+    i = 0
+    for f in os.listdir(os.path.join(dir_path, 'processed')):
+        ext = os.path.splitext(f)[1]
+        new_filename = str(i) + ext
+        src = os.path.join(dir_path, 'processed', f)
+        dst = os.path.join(dir_path, 'processed', new_filename)
+        os.rename(src, dst)
+        i += 1
