@@ -22,8 +22,25 @@ def crop(dir_path):
         f_path = os.path.join(dir_path, 'processed', f)
         img = cv2.imread(f_path)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        contours, hierarchy = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy = cv2.findContours(
+            gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contours = sorted(contours, key=cv2.contourArea, reverse=True)
         x, y, w, h = cv2.boundingRect(contours[0])
         cropped_img = img[y:y+h, x:x+w]
         cv2.imwrite(f_path, cropped_img)
+
+
+def blur(dir_path):
+    face_cascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    for f in os.listdir(os.path.join(dir_path, 'processed')):
+        f_path = os.path.join(dir_path, 'processed', f)
+        img = cv2.imread(f_path)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(
+            gray, scaleFactor=1.1, minNeighbors=5)
+        for (x, y, w, h) in faces:
+            face_roi = img[y:y+h, x:x+w]
+            face_roi = cv2.GaussianBlur(face_roi, (25, 25), 0)
+            img[y:y+face_roi.shape[0], x:x+face_roi.shape[1]] = face_roi
+            cv2.imwrite(f_path, img)
