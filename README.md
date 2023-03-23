@@ -13,7 +13,7 @@ pip install -r requirements.txt
 To use the tool, run the following command:
 
 ```bash
-python image_processing.py SRC_PATH DST_PATH [-b] [-c]
+python main.py SRC_PATH DST_PATH [-b] [-c]
 ```
 
 - `SRC_PATH` is the path to the directory containing the images to process.
@@ -24,7 +24,7 @@ python image_processing.py SRC_PATH DST_PATH [-b] [-c]
 ## Example
 
 ```bash
-python image_processing.py ./input_images ./output_images -b -c
+python main.py ./input_images ./output_images -b -c
 ```
 
 This command will process the images in the `./input_images` directory, apply a blur effect, crop black border, and save the processed images in the `./output_images` directory.
