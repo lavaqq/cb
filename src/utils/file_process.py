@@ -4,13 +4,16 @@ from PIL import Image
 
 
 def ren_cp_conv(dir_path, dst_path):
+    if not os.path.isdir(dst_path):
+        print(f"Error: '{dst_path}' is not a directory.")
+        sys.exit(1)
     if os.path.exists(dst_path):
         shutil.rmtree(dst_path)
     os.mkdir(dst_path)
     i = 0
     for f in os.listdir(dir_path):
         f_path = os.path.join(dir_path, f)
-        if os.path.isfile(f_path) and any(f_path.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png']):
+        if os.path.isfile(f_path) and any(f_path.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', 'webp']):
             ext = os.path.splitext(f_path)[1]
             new_filename = str(i) + ext
             src_path = os.path.join(dir_path, f)
