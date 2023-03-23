@@ -23,11 +23,11 @@ def ren_cp_conv(dir_path, dst_path):
     convert(dst_path)
 
 
-def convert(dir_path):
-    for f in os.listdir(dir_path):
+def convert(dst_path):
+    for f in os.listdir(dst_path):
         if not f.lower().endswith('.png'):
-            f_path = os.path.join(dir_path, f)
-            f_dir = dir_path
+            f_path = os.path.join(dst_path, f)
+            f_dir = dst_path
             with Image.open(f_path) as img:
                 new_f = os.path.splitext(f)[0] + '.png'
                 img.save(os.path.join(f_dir, new_f))
