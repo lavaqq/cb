@@ -32,3 +32,4 @@ def convert(dir_path):
                 new_f = os.path.splitext(f)[0] + '.png'
                 img.save(os.path.join(f_dir, new_f))
                 os.remove(f_path)
+                print(f"Info: '{f_path}' converted to PNG.")
