@@ -1,11 +1,18 @@
 import os
 import shutil
+import sys
+import getch
 from PIL import Image
 
 
 def rc(src_p, dst_p):
     if os.path.exists(dst_p):
-        shutil.rmtree(dst_p)
+        print(f"Error: '{dst_p}' already exist, do you want to continue? (y/n): ")
+        key = getch.getch()
+        if key == "y":
+            shutil.rmtree(dst_p)
+        else:
+            sys.exit(1)
     os.mkdir(dst_p)
     i = 0
     for f in os.listdir(src_p):
@@ -17,3 +24,4 @@ def rc(src_p, dst_p):
             dst_f = os.path.join(dst_p, new_f)
             shutil.copyfile(src_f, dst_f)
             i += 1
+    print(f"Info: {i} images transferred to '{dst_p}'.")
