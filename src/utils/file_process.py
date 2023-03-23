@@ -1,8 +1,8 @@
 import os
 import shutil
 
-def c_r(dir_path):
-    dst_dir = os.path.join(dir_path, 'processed')
+def c_r(dir_path, dst_path):
+    dst_dir = os.path.join(dst_path, 'processed')
     if os.path.exists(dst_dir):
         shutil.rmtree(dst_dir)
     os.mkdir(dst_dir)
