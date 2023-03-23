@@ -4,9 +4,6 @@ from PIL import Image
 
 
 def ren_cp_conv(dir_path, dst_path):
-    if not os.path.isdir(dst_path):
-        print(f"Error: '{dst_path}' is not a directory.")
-        sys.exit(1)
     if os.path.exists(dst_path):
         shutil.rmtree(dst_path)
     os.mkdir(dst_path)
