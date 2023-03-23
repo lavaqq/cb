@@ -3,8 +3,6 @@ import cv2
 import numpy as np
 from PIL import Image
 
-current_dir = os.getcwd()
-
 
 def convert(dir_path):
     for f in os.listdir(os.path.join(dir_path, 'processed')):
@@ -39,11 +37,11 @@ def blur(dir_path):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             gray, scaleFactor=1.1, minNeighbors=5)
+        mask_img = np.zeros(img.shape, dtype='uint8')
         for (x, y, w, h) in faces:
-            face_roi = img[y:y+h, x:x+w]
-            face_roi = cv2.GaussianBlur(face_roi, (75, 75), 0)
-            mask = np.zeros((h, w), dtype=np.uint8)
-            cv2.circle(mask, (w//2, h//2), min(w, h)//2, (255, 255, 255), -1)
-            face_roi = cv2.bitwise_and(face_roi, face_roi, mask=mask)
-            img[y:y+h, x:x+w] = cv2.add(img[y:y+h, x:x+w], face_roi)
-            cv2.imwrite(f_path, img)
+            center = (x + w//2, y + h//2)
+            radius = w//2
+            cv2.circle(mask_img, center, radius, (255, 255, 255), -1)
+        img_all_blurred = cv2.GaussianBlur(img, (85, 85), 0)
+        img = np.where(mask_img > 0, img_all_blurred, img)
+        cv2.imwrite(f_path, img)
