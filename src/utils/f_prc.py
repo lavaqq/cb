@@ -3,17 +3,17 @@ import shutil
 from PIL import Image
 
 
-def ren_cp_conv(dir_path, dst_path):
+def ren_cp_conv(src_path, dst_path):
     if os.path.exists(dst_path):
         shutil.rmtree(dst_path)
     os.mkdir(dst_path)
     i = 0
-    for f in os.listdir(dir_path):
-        f_path = os.path.join(dir_path, f)
+    for f in os.listdir(src_path):
+        f_path = os.path.join(src_path, f)
         if os.path.isfile(f_path) and any(f_path.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', 'webp']):
             ext = os.path.splitext(f_path)[1]
             new_filename = str(i) + ext
-            src_path = os.path.join(dir_path, f)
+            src_path = os.path.join(src_path, f)
             dst_path = os.path.join(dst_path, new_filename)
             shutil.copyfile(src_path, dst_path)
             i += 1
