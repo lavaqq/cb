@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 
 
-def crop(dir_path):
-    for f in os.listdir(os.path.join(dir_path, 'processed')):
-        f_path = os.path.join(dir_path, 'processed', f)
+def crop(dst_path):
+    for f in os.listdir(dst_path):
+        f_path = os.path.join(dst_path, f)
         img = cv2.imread(f_path)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         contours, hierarchy = cv2.findContours(
@@ -16,11 +16,11 @@ def crop(dir_path):
         cv2.imwrite(f_path, cropped_img)
 
 
-def blur(dir_path):
+def blur(dst_path):
     face_cascade = cv2.CascadeClassifier(
         cv2.data.haarcascades + "haarcascade_frontalface_alt.xml")
-    for f in os.listdir(os.path.join(dir_path, 'processed')):
-        f_path = os.path.join(dir_path, 'processed', f)
+    for f in os.listdir(dst_path):
+        f_path = os.path.join(dst_path, f)
         img = cv2.imread(f_path)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
