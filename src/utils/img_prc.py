@@ -33,7 +33,7 @@ def blur(dst_path):
             center = (x + w//2, y + h//2)
             radius = w//2
             cv2.circle(mask_img, center, radius, (255, 255, 255), -1)
-        img_all_blurred = cv2.GaussianBlur(img, (85, 85), 0)
+        img_all_blurred = cv2.GaussianBlur(img, (99, 99), 0)
         img = np.where(mask_img > 0, img_all_blurred, img)
         cv2.imwrite(f_path, img)
     print(f"Info: images blurred.")
