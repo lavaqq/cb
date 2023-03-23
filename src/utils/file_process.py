@@ -3,11 +3,10 @@ import shutil
 from PIL import Image
 
 
-def c_r(dir_path, dst_path):
-    dst_dir = os.path.join(dst_path, 'processed')
-    if os.path.exists(dst_dir):
-        shutil.rmtree(dst_dir)
-    os.mkdir(dst_dir)
+def ren_cp_conv(dir_path, dst_path):
+    if os.path.exists(dst_path):
+        shutil.rmtree(dst_path)
+    os.mkdir(dst_path)
     i = 0
     for f in os.listdir(dir_path):
         f_path = os.path.join(dir_path, f)
@@ -15,10 +14,10 @@ def c_r(dir_path, dst_path):
             ext = os.path.splitext(f_path)[1]
             new_filename = str(i) + ext
             src_path = os.path.join(dir_path, f)
-            dst_path = os.path.join(dst_dir, new_filename)
+            dst_path = os.path.join(dst_path, new_filename)
             shutil.copyfile(src_path, dst_path)
             i += 1
-    convert(dst_dir)
+    convert(dst_path)
 
 
 def convert(dir_path):
